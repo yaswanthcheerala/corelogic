@@ -1,9 +1,8 @@
 <html>
 <body>
-	<h1>Ramesh Branch</h1>
-<h2>Hello World!</h2>
-<h2>Hello DEVOPS TEAM</h2>
-<h2>GCP AWS AZURE</h2>
-<h3>Thank you Have a Nice Day</h3>
+<h1>Welcome To ADAEQUARE</h1>
+<h2>CORE LOGIC PROJECT</h2>
+<h3>Tool stack : JENKINS ANSIBLE TERRAFORM</h3>
+<h4>Thank you Have a Nice Day</h4>
 </body>
 </html>
