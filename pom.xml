@@ -16,6 +16,6 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>Corelogic</finalName>
+    <finalName>Master-Corelogic</finalName>
   </build>
 </project>
