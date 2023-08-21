@@ -1,28 +1,38 @@
+
+
+
+
 pipeline{
     agent any
     tools{
-        maven 'MAVEN-3.8.7'
+        maven 'maven-3.8.7'
     }
     stages{
         stage('Git CHeckout'){
             steps{
-            checkout scmGit(branches: [[name: 'master']], extensions: [], userRemoteConfigs: [[credentialsId: '6477d773-928b-4e02-b3d6-2b110980280c', url: 'https://github.com/PMFayazAhmed/corelogic.git']])
+                checkout scmGit(branches: [[name: 'master']], extensions: [], userRemoteConfigs: [[credentialsId: '37034ef7-c975-4cda-8cd7-4aa35baabfa6', url: 'https://github.com/PMFayazAhmed/corelogic.git']])
             }
+            
         }
-        stage('Build Artifact'){
+                stage('Build'){
             steps{
-            sh 'mvn package -f pom.xml'
+            sh 'mvn package -f pom.xml'    
             }
+            
         }
         stage('Tomcat Deploy'){
             steps{
-            deploy adapters: [tomcat9(credentialsId: '6b3db44f-1da8-4480-9906-803443b1fa49', path: '', url: 'http://34.134.209.166:8090/')], contextPath: null, war: '**/*.war'
-            }    
+               deploy adapters: [tomcat9(credentialsId: '052a82c1-032a-4471-a551-78b14c0be15f', path: '', url: 'http://34.122.148.120:8090/')], contextPath: null, war: '**/*.war' 
             }
+            
+        }
         stage('Nexus Upload'){
             steps{
-            nexusArtifactUploader artifacts: [[artifactId: 'corelogic', classifier: '', file: 'target/Test-PollSCM-Corelogic-Latest.war', type: 'war']], credentialsId: '9bcbd07b-af28-4805-877e-c63ada4fab61', groupId: 'com.adaequare', nexusUrl: '34.170.120.194:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-snapshots', version: '1.0-SNAPSHOT'
+               nexusArtifactUploader artifacts: [[artifactId: 'corelogic', classifier: '', file: 'target/Master-Corelogic.war', type: 'war']], credentialsId: '3706baec-282e-4181-88a8-ae798531403f', groupId: 'com.adaequare', nexusUrl: '34.16.128.152:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-snapshots', version: '1.0-SNAPSHOT' 
+            }
+            
         }
-        }
+
+        
     }
 }
