@@ -1,38 +1,28 @@
-
-
-
-
 pipeline{
     agent any
     tools{
-        maven 'maven-3.8.7'
+        maven 'Maven-3.8.7'
     }
     stages{
-        stage('Git CHeckout'){
+        stage('Checkout'){
             steps{
-                checkout scmGit(branches: [[name: 'master']], extensions: [], userRemoteConfigs: [[credentialsId: '37034ef7-c975-4cda-8cd7-4aa35baabfa6', url: 'https://github.com/PMFayazAhmed/corelogic.git']])
+                checkout scmGit(branches: [[name: 'master']], extensions: [], userRemoteConfigs: [[credentialsId: 'ab9f859a-3f40-4b92-befa-35c110434084', url: 'https://github.com/PMFayazAhmed/corelogic.git']])
             }
-            
         }
-                stage('Build'){
+        stage('Build'){
             steps{
-            sh 'mvn package -f pom.xml'    
+                sh 'mvn package -f pom.xml'  
             }
-            
         }
-        stage('Tomcat Deploy'){
+        stage('Deploy war'){
             steps{
-               deploy adapters: [tomcat9(credentialsId: '052a82c1-032a-4471-a551-78b14c0be15f', path: '', url: 'http://34.124.148.120:8090/')], contextPath: null, war: '**/*.war' 
+              deploy adapters: [tomcat9(credentialsId: '2e266ef9-5235-4067-887f-5792cc3703d5', path: '', url: 'http://35.230.33.36:8090/')], contextPath: null, war: '**/*.war'  
             }
-            
         }
-        stage('Nexus Upload'){
+        stage('Upload to Nexust'){
             steps{
-               nexusArtifactUploader artifacts: [[artifactId: 'corelogic', classifier: '', file: 'target/Master-Corelogic.war', type: 'war']], credentialsId: '3706baec-282e-4181-88a8-ae798531403f', groupId: 'com.adaequare', nexusUrl: '34.16.128.152:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-snapshots', version: '1.0-SNAPSHOT' 
+                nexusArtifactUploader artifacts: [[artifactId: 'corelogic', classifier: '', file: 'target/PollSCM-Corelogic.war', type: 'war']], credentialsId: 'cf9a36d1-6c9f-4cad-afb5-da810f47a344', groupId: 'com.adaequare', nexusUrl: '35.199.182.20:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-snapshots', version: '1.0-SNAPSHOT'
             }
-            
         }
-
-        
     }
 }
